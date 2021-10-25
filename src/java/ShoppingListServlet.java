@@ -23,29 +23,31 @@ public class ShoppingListServlet extends HttpServlet {
         }
         else if(request.getParameter("action").equals("logout")) {
             request.getSession().invalidate();
+            items.clear();
             getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
         return;
         }
     }
-
+    ArrayList<String> items = new ArrayList<String>();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
         
-        String username = request.getParameter("username");
-        ArrayList<String> items = new ArrayList<String>(); 
-        String action = request.getParameter("action");
-        
-        session.setAttribute("username", username);
+        String action = request.getParameter("action");    
         session.setAttribute("items", items);
-        if (request.getParameter("action").equals("register")) {
+        String item = request.getParameter("item");
+        ArrayList<String> items = (ArrayList<String>) session.getAttribute("items");
+        
+        if (action.equals("register")) {  
+            String username = request.getParameter("username");
+            session.setAttribute("username", username); 
            getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
         return;
         }
         else if(action.equals("add")) {
-            items.add(request.getParameter("item"));
+            items.add(items.size(), item);
             getServletContext().getRequestDispatcher("/WEB-INF/shoppingList.jsp").forward(request, response);
         return;
         }

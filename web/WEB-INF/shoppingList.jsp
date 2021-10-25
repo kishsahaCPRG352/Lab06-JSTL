@@ -24,14 +24,14 @@
         </form>
         
         <form action="" method="POST">
-            <c:forEach items="${items}" var="item">
+            
                 <ul>
-                
+                <c:forEach items="${items}" var="item">
                 <li><input type="radio" name="item" value="${item}">${item}</li>    
-                
+                </c:forEach>
                 
             </ul> 
-            </c:forEach>
+            
             <input type="submit" value="Delete">
             <input type="hidden" name="action" value="delete">
         </form>
